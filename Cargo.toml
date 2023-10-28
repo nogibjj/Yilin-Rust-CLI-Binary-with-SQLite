@@ -1,7 +1,7 @@
 [package]
 name = "YILIN-RUST-CLI-BINARY-WITH-SQLITE"
 version = "0.1.0"
-edition = "2018"
+edition = "2023"
 
 [dependencies]
 rusqlite = "0.26.0"
