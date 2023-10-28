@@ -1,5 +1,5 @@
 [package]
-name = "my_rust_project"
+name = "YILIN-RUST-CLI-BINARY-WITH-SQLITE"
 version = "0.1.0"
 edition = "2018"
 
