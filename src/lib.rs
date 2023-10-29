@@ -1,10 +1,12 @@
 // lib.rs
-use rusqlite::{params, Connection, Result, NO_PARAMS};
-use serde::{Deserialize, Serialize};
-use chrono::prelude::*;
+use rusqlite::{params, Connection, Result};
+use serde::Deserialize;
+use std::error::Error;
+use std::fs::File;
+use csv::ReaderBuilder;
 
-#[derive(Debug, Deserialize)]
-pub struct Song {
+#[derive(Debug, Deserialize, Clone)]
+pub struct Track {
     pub spotify_id: String,
     pub name: String,
     pub artists: String,
@@ -31,42 +33,37 @@ pub struct Song {
     pub tempo: f64,
     pub time_signature: String,
 }
-pub fn establish_connection() -> Result<Connection> {
-    Connection::open("spotify_tracks.db")
-}
 
-pub fn create_track(conn: &Connection, track: &Track) -> Result<()> {
-    let query = "INSERT INTO tracks (spotify_id, name, artists) VALUES (?1, ?2, ?3)"; // add all needed fields
-    conn.execute(query, params![track.spotify_id, track.name, track.artists])?; // add all needed fields
-    Ok(())
-}
-
-pub fn read_tracks(conn: &Connection) -> Result<Vec<Track>> {
-    let mut stmt = conn.prepare("SELECT spotify_id, name, artists FROM tracks")?; // adjust for your query
-    let tracks_iter = stmt.query_map(NO_PARAMS, |row| {
-        Ok(Track {
-            spotify_id: row.get(0)?,
-            name: row.get(1)?,
-            artists: row.get(2)?,
-            // ... other fields
-        })
-    })?;
-
+pub fn extract(file_path: &str) -> Result<Vec<Track>, Box<dyn Error>> {
+    let file = File::open(file_path)?;
+    let mut rdr = ReaderBuilder::new().from_reader(file);
     let mut tracks = Vec::new();
-    for track in tracks_iter {
-        tracks.push(track?);
+
+    for result in rdr.deserialize() {
+        let record: Track = result?;
+        tracks.push(record);
     }
+
     Ok(tracks)
 }
 
-pub fn update_track(conn: &Connection, track: &Track) -> Result<()> {
-    let query = "UPDATE tracks SET name = ?2, artists = ?3 WHERE spotify_id = ?1"; // add all needed fields
-    conn.execute(query, params![track.spotify_id, track.name, track.artists])?; // add all needed fields
-    Ok(())
+pub fn transform(tracks: &[Track]) -> Vec<Track> {
+    // Here, you can transform your data as needed, this function just clones data as-is
+    tracks.to_vec()
 }
 
-pub fn delete_track(conn: &Connection, spotify_id: &str) -> Result<()> {
-    let query = "DELETE FROM tracks WHERE spotify_id = ?1";
-    conn.execute(query, params![spotify_id])?;
-    Ok(())
+// Change the function signature to accept a mutable reference
+pub fn load(conn: &mut Connection, tracks: &[Track]) -> Result<(), rusqlite::Error> {
+    let tx = conn.transaction()?;
+    
+    for track in tracks {
+        // Construct your INSERT query and parameters based on your Track structure
+        tx.execute(
+            "INSERT INTO tracks (spotify_id, name, artists) VALUES (?1, ?2, ?3)", 
+            params![track.spotify_id, track.name, track.artists],
+        )?;
+    }
+    
+    tx.commit()
 }
+
