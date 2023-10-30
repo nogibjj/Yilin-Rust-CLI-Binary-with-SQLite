@@ -26,7 +26,12 @@ cargo run -- query "DELETE FROM product WHERE id = 4"
 ```bash
 cargo run -- load "sample.csv"
 ```
-
+## Result
+### CLI help
+![](result/help.png)
+### Query Demo
+![](result/insert1.png)
+![](result/insert2.png)
 ## References
 
 * [rust-cli-template](https://github.com/kbknapp/rust-cli-template)
