@@ -35,6 +35,8 @@ cargo run -- load "sample.csv"
 ### Query Demo
 ![](result/insert1.png)
 ![](result/insert2.png)
+## Test
+![](result/test.png)
 ## References
 
 * [rust-cli-template](https://github.com/kbknapp/rust-cli-template)
