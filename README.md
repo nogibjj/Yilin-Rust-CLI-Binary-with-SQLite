@@ -9,7 +9,7 @@
 ```bash
 cargo run -- --help
 ```
-### To execute a SQL query
+### To execute a SQL query in SQLite
 ```bash
 cargo run -- query "SELECT * FROM product"
 ```
