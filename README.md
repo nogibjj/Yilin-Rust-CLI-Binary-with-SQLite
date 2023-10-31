@@ -37,6 +37,7 @@ cargo run -- load "sample.csv"
 ![](result/insert2.png)
 ## Test
 ![](result/test.png)
+## YouTube Link
+https://youtu.be/LBiJOxeJfW4
 ## References
-
 * [rust-cli-template](https://github.com/kbknapp/rust-cli-template)
