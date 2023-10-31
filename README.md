@@ -31,12 +31,12 @@ cargo run -- load "sample.csv"
 ```
 ## Result
 ### CLI help
-![](result/help.png)
+![help](result/help.png)
 ### Query Demo
-![](result/insert1.png)
-![](result/insert2.png)
+![insert1](result/insert1.png)
+![insert2](result/insert2.png)
 ## Test
-![](result/test.png)
+![test](result/test.png)
 ## YouTube Link
 https://youtu.be/LBiJOxeJfW4
 ## References
