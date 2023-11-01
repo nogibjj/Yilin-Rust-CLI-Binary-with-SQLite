@@ -38,6 +38,8 @@ cargo run -- load "sample.csv"
 ![insert2](Result/insert2.png)
 ## Test
 ![test](Result/test.png)
+## Optimized Rust Binary
+![artifact](Result/binary.png)
 ## YouTube Link
 https://youtu.be/LBiJOxeJfW4
 ## References
