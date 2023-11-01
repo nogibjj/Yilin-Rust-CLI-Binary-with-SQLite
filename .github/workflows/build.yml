@@ -1,0 +1,33 @@
+name: Rust Binary Build
+
+on:
+  push:
+    branches:
+      - main  # Adjust this if your default branch is named differently
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Setup Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        override: true
+
+    - name: Build Release Binary
+      run: |
+        cargo build --release
+        strip target/release/Project2  # Use 'strip' to reduce the binary size; remove this line if not needed.
+
+    - name: Upload Binary as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: my-binary-artifact
+        path: target/release/Project2
