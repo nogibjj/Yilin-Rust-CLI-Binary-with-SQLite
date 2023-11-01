@@ -1,3 +1,4 @@
+[![CI](https://github.com/nogibjj/python-template/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/python-template/actions/workflows/cicd.yml)
 # Rust CLI Binary with SQLite
 - SQLite Database: Include a SQLite database and demonstrate CRUD (Create, Read, Update, Delete) operations.
 - Optimized Rust Binary: Include a process that generates an optimized Rust binary as a GitHub Actions artifact that can be downloaded.
